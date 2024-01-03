@@ -5,15 +5,20 @@ use std::time::SystemTime;
 use std::ffi::OsString;
 use chrono::{Utc, TimeZone, LocalResult};
 
+// returns the path to the desktop folder
+
 pub fn get_desktop_path() -> PathBuf {
     PathBuf::from("/home/mike/projects/rust/file_reader/mock_desktop")
 }
 
+// creates a new directory at the given path
 
 pub fn create_dir(path: &PathBuf) -> io::Result<()> {
     fs::create_dir(path)?;
     Ok(())
 }
+
+// returns a vector of files for the given directory
 
 pub fn read_dir_contents(dir: &PathBuf) -> io::Result<Vec<DirEntry>> {
     let mut entries = Vec::new();
@@ -26,7 +31,9 @@ pub fn read_dir_contents(dir: &PathBuf) -> io::Result<Vec<DirEntry>> {
     Ok(entries)
 }
 
-pub fn read_file_created_time(file: &DirEntry) -> io::Result<String> {
+// returns the file created date
+
+pub fn read_file_created_date(file: &DirEntry) -> io::Result<String> {
     let metadata = file.metadata()?;
     let created = metadata.created()?;
     
@@ -37,10 +44,10 @@ pub fn read_file_created_time(file: &DirEntry) -> io::Result<String> {
         },
         Err(_) => panic!("SystemTime before UNIX EPOCH!"),
     }
-    
-    
-    
 }
+
+
+// returns a vector containing all file extensions
 
 pub fn list_all_extensions(entries: &[DirEntry]) -> io::Result<Vec<OsString>> {
     let mut extensions = Vec::new();
@@ -55,6 +62,8 @@ pub fn list_all_extensions(entries: &[DirEntry]) -> io::Result<Vec<OsString>> {
     
     Ok(extensions)
 }
+
+// converts a UNIX timestamp to a date string
 
 fn convert_timestamp_to_date(timestamp: i64) -> String {
     match Utc.timestamp_opt(timestamp, 0) {
