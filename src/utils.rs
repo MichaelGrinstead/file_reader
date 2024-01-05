@@ -8,7 +8,7 @@ use chrono::{Utc, TimeZone, LocalResult};
 // returns the path to the desktop folder
 
 pub fn get_desktop_path() -> PathBuf {
-    PathBuf::from("/home/mike/projects/rust/file_reader/mock_desktop")
+    PathBuf::from("/home/mike/projects/rust/file_sorter/mock_desktop")
 }
 
 // creates a new directory at the given path
